@@ -1,0 +1,91 @@
+--- /mnt/data/repo_orig/turkce_lang_v10_repl_vm_fix/interpreter.cpp	2026-04-06 01:07:18.000000000 +0000
++++ /mnt/data/fixed_repo/interpreter.cpp	2026-04-18 19:39:08.862944823 +0000
+@@ -426,14 +426,14 @@
+     // yaz(x): print without newline (or you can change to newline if you want)
+     if(name=="yaz"){
+         if(args.size()!=1){ runtimeError("yaz(x) expects 1 arg"); return Value::makeNull(); }
+-        std::cout << args[0].toString();
++        std::cout << args[0].toString() << std::flush;
+         return Value::makeNull();
+     }
+ 
+     // oku/girdi([prompt]): read a line from stdin (optional prompt)
+     if(name=="oku" || name=="girdi"){
+         if(args.size()>1){ runtimeError("oku([prompt]) expects 0 or 1 arg"); return Value::makeNull(); }
+-        if(args.size()==1) std::cout << args[0].toString();
++        if(args.size()==1) std::cout << args[0].toString() << std::flush;
+         std::string line;
+         std::getline(std::cin, line);
+         return Value::makeString(line);
+@@ -442,7 +442,7 @@
+     // oku_sayi/girdi_sayi([prompt]): read a number
+     if(name=="oku_sayi" || name=="oku_sayı" || name=="girdi_sayi" || name=="girdi_sayı"){
+         if(args.size()>1){ runtimeError("oku_sayi([prompt]) expects 0 or 1 arg"); return Value::makeNull(); }
+-        if(args.size()==1) std::cout << args[0].toString();
++        if(args.size()==1) std::cout << args[0].toString() << std::flush;
+         std::string line;
+         std::getline(std::cin, line);
+         try{
+@@ -457,7 +457,7 @@
+     // oku_tamsayi/girdi_tamsayi([prompt]): read an integer
+     if(name=="oku_tamsayi" || name=="oku_tamsayı" || name=="girdi_tamsayi" || name=="girdi_tamsayı"){
+         if(args.size()>1){ runtimeError("oku_tamsayi([prompt]) expects 0 or 1 arg"); return Value::makeNull(); }
+-        if(args.size()==1) std::cout << args[0].toString();
++        if(args.size()==1) std::cout << args[0].toString() << std::flush;
+         std::string line;
+         std::getline(std::cin, line);
+         try{
+@@ -1506,7 +1506,7 @@
+     }
+ 
+     if(auto pr=dynamic_cast<const StmtPrint*>(s)){
+-        std::cout<<evalExpr(pr->expr.get()).toString()<<"\n";
++        std::cout<<evalExpr(pr->expr.get()).toString()<<"\n"<<std::flush;
+         return Flow::none();
+     }
+ 
+--- /mnt/data/repo_orig/turkce_lang_v10_repl_vm_fix/bytecode_vm.cpp	2026-04-06 01:08:19.000000000 +0000
++++ /mnt/data/fixed_repo/bytecode_vm.cpp	2026-04-18 19:39:08.864869745 +0000
+@@ -2028,13 +2028,13 @@
+ 
+     if(name=="yaz"){
+         if(args.size()!=1){ runtimeError("yaz(x) expects 1 arg"); return Value::makeNull(); }
+-        std::cout << args[0].toString();
++        std::cout << args[0].toString() << std::flush;
+         return Value::makeNull();
+     }
+ 
+     if(name=="oku" || name=="girdi"){
+         if(args.size()>1){ runtimeError("oku([prompt]) expects 0 or 1 arg"); return Value::makeNull(); }
+-        if(args.size()==1) std::cout << args[0].toString();
++        if(args.size()==1) std::cout << args[0].toString() << std::flush;
+         std::string line;
+         std::getline(std::cin, line);
+         return Value::makeString(line);
+@@ -2042,7 +2042,7 @@
+ 
+     if(name=="oku_sayi" || name=="oku_sayı" || name=="girdi_sayi" || name=="girdi_sayı"){
+         if(args.size()>1){ runtimeError("oku_sayi([prompt]) expects 0 or 1 arg"); return Value::makeNull(); }
+-        if(args.size()==1) std::cout << args[0].toString();
++        if(args.size()==1) std::cout << args[0].toString() << std::flush;
+         std::string line;
+         std::getline(std::cin, line);
+         try{
+@@ -2056,7 +2056,7 @@
+ 
+     if(name=="oku_tamsayi" || name=="oku_tamsayı" || name=="girdi_tamsayi" || name=="girdi_tamsayı"){
+         if(args.size()>1){ runtimeError("oku_tamsayi([prompt]) expects 0 or 1 arg"); return Value::makeNull(); }
+-        if(args.size()==1) std::cout << args[0].toString();
++        if(args.size()==1) std::cout << args[0].toString() << std::flush;
+         std::string line;
+         std::getline(std::cin, line);
+         try{
+@@ -2716,7 +2716,7 @@
+ 
+             case OpCode::PRINT: {
+                 Value a = pop();
+-                std::cout << a.toString() << "\n";
++                std::cout << a.toString() << "\n" << std::flush;
+                 break;
+             }
+ 

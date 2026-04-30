@@ -1,0 +1,43 @@
+﻿# Dependencies
+node_modules/
+
+# Frontend build output
+dist/
+build/
+
+# Tauri/Rust build output
+src-tauri/target/
+target/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Backups from development
+backups/
+src/*.backup*
+src-tauri/*.backup*
+*.backup*
+*.bad-json-backup.json
+
+# Temporary files
+*.tmp
+*.temp
+
+# Windows metadata
+*Zone.Identifier
+*#Uf03aZone.Identifier
